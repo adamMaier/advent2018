@@ -15,11 +15,7 @@ data <- read_delim(
 
 # Write a function to create a vector given start and end sleep times
 create_vec <- function(start = NULL, end = NULL) {
-  if (start != 0) {
-    c(rep(0, start - 1), rep(1, end - start), rep(0, 1 + 60 - end))
-  } else {
-    c(rep(1, end - 1), rep(0, 1 + 60 - end))
-  }
+  c(rep(0, start), rep(1, end - start), rep(0, 60 - end))
 }
 
 # Write a function to extract start and end times from a chronological order of sleep then wake then
@@ -80,7 +76,7 @@ p1_id <- p1_data %>%
 # Find the minute most slept by keeping records of id and converting them to vectors of 60, then
 # summing
 result <- time_extract(p1_data %>% filter(id == p1_id))
-p1_minute <- which(result == max(result))
+p1_minute <- which(result == max(result)) - 1
 
 # Print result
 p1_minute * as.numeric(p1_id)
@@ -96,7 +92,7 @@ p2_data <- split(p1_data, f = p1_data$id)
 p2_data <- 
   lapply(p2_data, function(x) {
     vec <- time_extract(x)
-    out_minute <- which(vec == max(vec))
+    out_minute <- which(vec == max(vec)) - 1
     out_total <- max(vec)
     c(out_total, out_minute)
     }
