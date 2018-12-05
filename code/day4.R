@@ -22,8 +22,8 @@ create_vec <- function(start = NULL, end = NULL) {
   }
 }
 
-# Write a function to extract start and end times from a chronological order of sellp then wake then
-# slepp then... wake
+# Write a function to extract start and end times from a chronological order of sleep then wake then
+# sleep then... wake
 time_extract <- function(data = NULL) {
   
   starts_sleep <- data %>%
@@ -45,7 +45,7 @@ time_extract <- function(data = NULL) {
 
 # PART 1 -------------------------------------------------------------------------------------------
 
-# Extract key dimensions of data as separate variables, round any time prior to midnight to midnight,
+# Extract key dimensions of data as separate variables,
 # then order chronologically
 p1_data <- data %>%
   separate(var, into = c("date_time", "action"), sep = "] ") %>%
