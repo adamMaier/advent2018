@@ -8,6 +8,7 @@ x <- pull(data, x)
 y <- pull(data, y)
 
 
+
 # PART 1 -------------------------------------------------------------------------------------------
 
 # Adjust all coordinates so minimum edge is 1
@@ -21,7 +22,7 @@ full_points <-
     ncol = 2
   )
 
-# For each point in matrix, calclate the manhattan distance with all provided points
+# For each point in matrix, calculate the manhattan distance with all provided points
 min_dist <- c()
 for(i in 1:nrow(full_points)) {
   min_vals <- dist(rbind(full_points[i, ], cbind(x1, y1)), method = "manhattan")[1:length(x1)]
@@ -44,3 +45,24 @@ id_drop <- unique(min_dist[edges])
 
 # Drop Ids that are infinite from full set of values, then take max of tabled values
 max(table(min_dist[!min_dist %in% id_drop]))
+
+
+
+# PART 2 -------------------------------------------------------------------------------------------
+
+# Create 2-column matrix containing all points on -1000 to 1000 grid
+full_points <- 
+  matrix(
+    c(rep(-1000:1000, each = 2001), rep(-1000:1000, times = 2001)),
+    ncol = 2
+  )
+
+# For each point in matrix, sum the manhattan distance with all provided points
+total_dist <- c()
+for(i in 1:nrow(full_points)) {
+  total_dist[i] <-
+    sum(dist(rbind(full_points[i, ], cbind(x, y)), method = "manhattan")[1:length(x)])
+}
+
+# Tally the number of points with size less than 10000
+sum(total_dist < 10000)
