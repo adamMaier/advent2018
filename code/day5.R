@@ -36,8 +36,7 @@ react_fn(data)
 
 # PART 2 -------------------------------------------------------------------------------------------
 
-# Repeat same while loop as above, storing the final number for each letter. Two methods give same
-# result.
+# Repeat same while loop as above, storing the final number for each letter.
 results <- c()
 for(i in letters){
   letter_out <- paste(i, toupper(i), sep = "|")
