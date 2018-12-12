@@ -88,24 +88,17 @@ elig_letters <- function(x) {
 
 # Function that finds eligible elves and puts them in a list
 elig_elves <- function(index, input_list) {
-  for(i in 1:5) {
-    logi <- c(
-      is.na(input_list[[1]][index]) | is.null(input_list[[1]][index]),
-      is.na(input_list[[2]][index]) | is.null(input_list[[2]][index]),
-      is.na(input_list[[3]][index]) | is.null(input_list[[3]][index]),
-      is.na(input_list[[4]][index]) | is.null(input_list[[4]][index]),
-      is.na(input_list[[5]][index]) | is.null(input_list[[5]][index])
-    )
-  }
-  yes <- input_list[logi]
-  no <- input_list[!logi]
+  log_vec <- map(input_list, index)
+  yes <- input_list[is.na(log_vec)]
+  no <- input_list[!is.na(log_vec)]
   list(yes, no)
 }
   
 # Function that returns a vector of commited time for an elf
 commit_elf <- function(elf_vec, letter) {
   out <- elf_vec
-  out[(length(out) + 1):(length(out) + 60 + which(LETTERS == letter))] <- letter
+  out[length(out):(length(out) + 60 + which(LETTERS == letter) - 1)] <- letter
+  out[length(out) + 1] <- NA
   out
 }
 
@@ -117,6 +110,7 @@ names(letter_ends) <- LETTERS
 i <- 0
 test <- FALSE
 
+# Run loop until all NAs at the end.
 while (!test) {
   
   # Start counter
@@ -137,7 +131,7 @@ while (!test) {
   used_elves <- elig_elves(i, elf_list)[[2]]
 
   # If letters equals or exceeds open elves, assign all elves. Otherwise assign non-assigned elves
-  # an 'available'
+  # an NA for 'available'
   if (length(open_letters) >= length(open_elves) & length(open_elves) != 0) {
     for(j in 1:length(open_elves)) {
       open_elves[[j]] <- commit_elf(open_elves[[j]], open_letters[j])
@@ -159,9 +153,9 @@ while (!test) {
   # Recombine elf lists
   elf_list <- c(open_elves, used_elves)
   
-  # Run test to sto loop
-  test <- sum(is.na(map(elf_list, i))) == 5 & i != 1
+  # Run test to stop loop
+  test <- sum(is.na(map(elf_list, i))) == 5
 }
 
-# Print counter (subtracting 1 for start and 1 for end)
-i - 2
+# Print counter (subtracting 1 for 1 for end)
+i - 1
