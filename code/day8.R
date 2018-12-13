@@ -36,9 +36,6 @@ while(i > 1 | p1[1] != -1) {
     j <- j + p1[i + 1]                    # Account for new meta values in j
     i <- max(which(nodes[1:(i + 1)] & (p1 > -1)[1:(i + 1)]))     # Backtrack i to the next highest node
   }
-  p1[i]
-  nodes
-  meta
 }
 
 # Print result
