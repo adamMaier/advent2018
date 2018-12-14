@@ -50,12 +50,12 @@ sum(p1[meta])
 
 p2 <- as.numeric(data)
 
-# Find meta values of given node
+# Function to find meta values of given node
 meta_finder <- function(x) {
   p2[parent_node == x & meta]
 }
 
-# Find position of child values of given node
+# Function to find position of child values of given node
 child_finder <- function(x) {
   which(nodes & parent_node == x & !meta)
 }
