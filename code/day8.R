@@ -65,7 +65,6 @@ child_finder <- function(x) {
 init <- child_finder(1)[meta_finder(1)]
 init_remain <- 0
 out_sum <- 0
-counter <- 0
 
 while(length(init_remain) > 0) {
   
